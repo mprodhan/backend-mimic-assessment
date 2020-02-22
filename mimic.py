@@ -46,7 +46,7 @@ columns, so the output looks better.
 import random
 import sys
 
-__author__ = "???"
+__author__ = "mprodhan & yabamov" 
 
 
 def create_mimic_dict(filename):
@@ -67,7 +67,18 @@ def create_mimic_dict(filename):
                 "who" : ["knows"]
             }
     """
-    # +++your code here+++
+    with open(filename, 'r') as f:
+        read_data = f.read()
+        my_data = read_data.split()
+        dict_file = {"": [my_data[0]]}
+        for i in range(0, len(my_data) -1):
+            if my_data[i] not in dict_file:
+                dict_file[my_data[i]] = [my_data[i+1]]
+            else:
+                dict_file[my_data[i]].append(my_data[i+1])
+    return dict_file
+
+
 
 
 def print_mimic(mimic_dict, start_word):
@@ -77,14 +88,15 @@ def print_mimic(mimic_dict, start_word):
         - Randomly select a new word from the next-list
         - Repeat this process 200 times
     """
-    # +++your code here+++
-    pass
+    for i in range(0, 200):
+        print(start_word)
+        start_word = random.choice(mimic_dict[start_word])
 
 
 # Provided main(), calls mimic_dict() and mimic()
 def main():
     if len(sys.argv) != 2:
-        print 'usage: python mimic.py file-to-read'
+        print('usage: python mimic.py file-to-read')
         sys.exit(1)
 
     d = create_mimic_dict(sys.argv[1])
